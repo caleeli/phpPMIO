@@ -11,7 +11,7 @@ class Users extends ApiPackage
     
         return $this->api->call($settings);
     }
-    public function show(user)
+    public function show($user)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
