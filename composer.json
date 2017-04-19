@@ -1,0 +1,16 @@
+{
+    "name": "processmaker/php-pmio",
+    "description": "PMIO Api PHP Library",
+    "authors": [
+        {
+            "name": "David Callizaya",
+            "email": "david.callizaya@processmaker.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "ProcessMaker\\": "src/ProcessMaker"
+        }
+    }
+}
