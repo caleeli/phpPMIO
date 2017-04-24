@@ -92,4 +92,19 @@ class Events extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
+    public function trigger($process, $events, $data)
+    {
+        $settings = $this->api->getSettings();
+        $settings[CURLOPT_CUSTOMREQUEST] = "POST";
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/events/' . $events . '/trigger';
+        $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
+        $settings[CURLOPT_POSTFIELDS] = json_encode([
+            "data" => [
+                "attributes" => [
+                    "content" => json_encode($data)
+                ]
+            ]
+        ]);
+        return $this->api->call($settings);
+    }
 }

@@ -39,7 +39,7 @@ class ApiBase
                     $previous = null;
                     for ($i = count($error->errors) - 1; $i >= 0; $i--) {
                         $exception = new ApiException(
-                            $error->errors[$i]->title . ': ' . $error->errors[$i]->detail,
+                            $error->errors[$i]->title . (isset($error->errors[$i]->detail) ? ': ' . $error->errors[$i]->detail : ''),
                             $error->errors[$i]->code,
                             $previous
                         );
