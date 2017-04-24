@@ -20,5 +20,6 @@ class ApiPackage
                 unset($data[$key]);
             }
         }
+        return $data;
     }
 }
