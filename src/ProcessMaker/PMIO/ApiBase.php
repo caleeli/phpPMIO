@@ -13,8 +13,8 @@ class ApiBase
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_HTTPHEADER => [
-            "authorization: Basic eC1wbS1sb2NhbC1jbGllbnQ6MTc5YWQ0NWM2Y2UyY2I5N2NmMTAyOWUyMTIwNDZlODE",
             "cache-control: no-cache",
+            'Accept: application/json',
             "content-type: application/json"
         ]
     ];
@@ -31,11 +31,34 @@ class ApiBase
         if ($err) {
             throw new CurlException($err);
         } else {
-            if ($statusCode == 200) {
-                return json_decode($response);
+            if ($statusCode >= 200 && $statusCode < 300) {
+                return $this->encodeResponse($response, $info);
             } else {
-                throw new ApiException(strip_tags($response));
+                $error = $this->encodeResponse($response, $info);
+                if (is_object($error)) {
+                    $previous = null;
+                    for ($i = count($error->errors) - 1; $i >= 0; $i--) {
+                        $exception = new ApiException(
+                            $error->errors[$i]->title . ': ' . $error->errors[$i]->detail,
+                            $error->errors[$i]->code,
+                            $previous
+                        );
+                        $previous = $exception;
+                    }
+                } else {
+                    $exception = new ApiException($error);
+                }
+                throw $exception;
             }
+        }
+    }
+
+    protected function encodeResponse($response, $info)
+    {
+        if (strpos($info["content_type"], "json") !== false) {
+            return json_decode($response);
+        } else {
+            return $response;
         }
     }
 

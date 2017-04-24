@@ -12,4 +12,13 @@ class ApiPackage
     {
         $this->api = $api;
     }
+
+    protected function cleanData($data)
+    {
+        foreach ($data as $key => $value) {
+            if ($value === null) {
+                unset($data[$key]);
+            }
+        }
+    }
 }
