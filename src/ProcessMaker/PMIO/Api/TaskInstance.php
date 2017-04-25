@@ -37,7 +37,7 @@ class TaskInstance extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
-    public function update($task_instance, $id, $task_id, $instance_id, $user_id, $group_id, $status, $priority, $delegate_date, $start_date, $finish_date, $task_due_date, $risk_date, $data, $duration, $instance_overdue_percentage)
+    public function update($task_instance, $id, $task_id, $instance_id, $user_id, $group_id, $status, $priority, $delegate_date, $start_date, $finish_date, $task_due_date, $risk_date, $data, $duration, $instance_overdue_percentage, $content)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "PUT";
@@ -62,6 +62,7 @@ class TaskInstance extends ApiPackage
                     "data" => $data,
                     "duration" => $duration,
                     "instance_overdue_percentage" => $instance_overdue_percentage,
+                    "content" => $content,
                 ])
             ]
         ]);
