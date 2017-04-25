@@ -22,4 +22,15 @@ class ApiPackage
         }
         return $data;
     }
+
+    function buildQuery($array, $withQuestion = true)
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            if ($value !== null) {
+                $result[] = urlencode($key) . '=' . urlencode($value);
+            }
+        }
+        return ($withQuestion && $result ? '?' : '') . implode('&', $result);
+    }
 }

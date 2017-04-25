@@ -5,11 +5,11 @@ use ProcessMaker\PMIO\ApiPackage;
 
 class MessageVariable extends ApiPackage
 {
-    public function index()
+    public function index($include=null, $fields=null, $page=null, $sort=null, $filter=null)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
-        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/message_variables';
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/message_variables'.$this->buildQuery(['include'=>$include,'fields'=>$fields,'page'=>$page,'sort'=>$sort,'filter'=>$filter,]);
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
