@@ -13,11 +13,11 @@ class Instance extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
-    public function show($process, $instance)
+    public function show($process, $instance, $include=null, $fields=null)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
-        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/instances/' . $instance ;
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/instances/' . $instance .$this->buildQuery(['include'=>$include,'fields'=>$fields,]);
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }

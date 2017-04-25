@@ -13,11 +13,11 @@ class TaskConnector extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
-    public function show($process, $task, $connector)
+    public function show($process, $task, $connector, $include=null, $fields=null)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
-        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/tasks/' . $task . '/connectors/' . $connector ;
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/tasks/' . $task . '/connectors/' . $connector .$this->buildQuery(['include'=>$include,'fields'=>$fields,]);
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }

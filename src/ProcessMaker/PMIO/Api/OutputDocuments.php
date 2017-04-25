@@ -13,11 +13,11 @@ class OutputDocuments extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
-    public function show($process, $output_document)
+    public function show($process, $output_document, $include=null, $fields=null)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
-        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/output_documents/' . $output_document ;
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/processes/' . $process . '/output_documents/' . $output_document .$this->buildQuery(['include'=>$include,'fields'=>$fields,]);
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }

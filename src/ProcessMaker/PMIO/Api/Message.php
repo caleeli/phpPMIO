@@ -13,11 +13,11 @@ class Message extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
-    public function show($message)
+    public function show($message, $include=null, $fields=null)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
-        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/messages/' . $message ;
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/messages/' . $message .$this->buildQuery(['include'=>$include,'fields'=>$fields,]);
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }

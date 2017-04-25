@@ -13,11 +13,11 @@ class EmailServer extends ApiPackage
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
-    public function show($email_server)
+    public function show($email_server, $include=null, $fields=null)
     {
         $settings = $this->api->getSettings();
         $settings[CURLOPT_CUSTOMREQUEST] = "GET";
-        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/email_servers/' . $email_server ;
+        $settings[CURLOPT_URL] = $this->api->getBaseUrl() . '/' . 'api/v1/email_servers/' . $email_server .$this->buildQuery(['include'=>$include,'fields'=>$fields,]);
         $settings[CURLOPT_HTTPHEADER][] = "Authorization: Bearer " . $this->api->getAccessToken();
         return $this->api->call($settings);
     }
