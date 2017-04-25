@@ -27,7 +27,12 @@ class ApiPackage
     {
         $result = [];
         foreach ($array as $key => $value) {
-            if ($value !== null) {
+            if (is_array($value)) {
+                foreach($value as $k=>$v) {
+                    $result[] = urlencode($key).'['.(is_numeric($k)?'':$k).']'
+                        . '=' . urlencode($v);
+                }
+            } elseif ($value !== null) {
                 $result[] = urlencode($key) . '=' . urlencode($value);
             }
         }
