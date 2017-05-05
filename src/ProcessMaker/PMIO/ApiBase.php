@@ -35,7 +35,7 @@ class ApiBase
                 return $this->encodeResponse($response, $info);
             } else {
                 $error = $this->encodeResponse($response, $info);
-                if (is_object($error)) {
+                if (is_object($error) && isset($error->errors)) {
                     $previous = null;
                     for ($i = count($error->errors) - 1; $i >= 0; $i--) {
                         $exception = new ApiException(
@@ -45,6 +45,8 @@ class ApiBase
                         );
                         $previous = $exception;
                     }
+                } elseif(is_object($error) && isset($error->error)) {
+                    $exception = new ApiException($error->error.': '.$error->message);
                 } else {
                     $exception = new ApiException($error);
                 }
